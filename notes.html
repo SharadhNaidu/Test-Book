@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head content remains the same -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Previous styles remain the same, except for date-time related styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary-color: #3018E8;
+            --secondary-color: #E518F8;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --danger-color: #EF4444;
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+
+        .app-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        /* Rest of the previous styles remain the same */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .note-form, .notes-list {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(229, 24, 248, 0.1);
+        }
+
+        .input-group textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            gap: 0.5rem;
+        }
+
+        .save-btn {
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            color: white;
+        }
+
+        .save-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .download-btn {
+            background: rgba(48, 24, 232, 0.9);
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: rgba(48, 24, 232, 1);
+            transform: translateY(-2px);
+        }
+
+        .clear-btn {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .clear-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .notes-list {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .note-item {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .note-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .note-item h3 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-item small {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary-color);
+        }
+
+        .empty-state i {
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3018E8 0%, #E518F8 100%);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #E518F8 0%, #3018E8 100%);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease-in-out;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-note-sticky"></i> Notes App</h1>
+        </header>
+
+        <div class="app-layout">
+            <div class="note-form">
+                <div class="input-group">
+                    <label for="noteTitle">Title</label>
+                    <input type="text" id="noteTitle" placeholder="Enter Your Subject Tittle">
+                </div>
+
+                <div class="input-group">
+                    <label for="noteContent">Content</label>
+                    <textarea id="noteContent" placeholder="Write your notes here"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button class="save-btn" onclick="saveNote()">
+                        <i class="fas fa-save"></i> Save Note
+                    </button>
+                    <button class="download-btn" onclick="downloadAsPDF()">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </button>
+                    <button class="download-btn" onclick="downloadAsText()">
+                        <i class="fas fa-file-alt"></i> Download Text
+                    </button>
+                    <button class="clear-btn" onclick="clearForm()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="notes-list" id="notesList">
+                <!-- Notes will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize notes array from localStorage
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Function to save note
+        function saveNote() {
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+
+            if (!title || !content) {
+                showToast('Please fill in both title and content!');
+                return;
+            }
+
+            const note = {
+                id: Date.now(),
+                title,
+                content,
+                date: new Date().toLocaleString()
+            };
+
+            notes.unshift(note);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            displayNotes();
+            clearForm();
+            showToast('Note saved successfully!');
+        }
+
+        // Function to display notes
+        function displayNotes() {
+            const notesList = document.getElementById('notesList');
+            
+            if (notes.length === 0) {
+                notesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-notes-medical"></i>
+                        <h3>No notes yet</h3>
+                        <p>Create your first note to get started!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            notesList.innerHTML = notes.map(note => `
+                <div class="note-item">
+                    <h3>${note.title}</h3>
+                    <p>${note.content}</p>
+                    <small><i class="fas fa-clock"></i> ${note.date}</small>
+                </div>
+            `).join('');
+        }
+
+        // Function to clear form
+        function clearForm() {
+            document.getElementById('noteTitle').value = '';
+            document.getElementById('noteContent').value = '';
+        }
+
+        // Function to download as PDF
+        function downloadAsPDF() {
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+
+            if (!title || !content) {
+                showToast('Please fill in both title and content before downloading!');
+                return;
+            }
+
+            const element = document.createElement('div');
+            element.innerHTML = `
+                <h1>${title}</h1>
+                <p>${content}</p>
+            `;
+
+            const opt = {
+                margin: 1,
+                filename: `${title.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+            showToast('PDF downloaded successfully!');
+        }
+
+        // Function to download as text
+        function downloadAsText() {
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+
+            if (!title || !content) {
+                showToast('Please fill in both title and content before downloading!');
+                return;
+            }
+
+            const text = `${title}\n\n${content}`;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title.toLowerCase().replace(/\s+/g, '-')}.txt`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            showToast('Text file downloaded successfully!');
+        }
+
+        // Display notes when page loads
+        displayNotes();
+    </script>
+</body>
+</html>

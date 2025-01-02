@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomodoro Timer</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+        }
+
+        .timer-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .time {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #2196f3;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1976d2;
+        }
+
+        .status {
+            font-size: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .session-count {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer-container">
+        <div class="session-count">Session 1</div>
+        <div class="time">25:00</div>
+        <div class="status">Study Time</div>
+        <div class="controls">
+            <button id="startBtn">Start</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        const timerDisplay = document.querySelector('.time');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const statusText = document.querySelector('.status');
+        const sessionCount = document.querySelector('.session-count');
+
+        let timeLeft = 25 * 60;
+        let isRunning = false;
+        let isBreak = false;
+        let timer = null;
+        let currentSession = 1;
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateDisplay() {
+            timerDisplay.textContent = formatTime(timeLeft);
+        }
+
+        function toggleTimer() {
+            if (!isRunning) {
+                timer = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    
+                    if (timeLeft === 0) {
+                        clearInterval(timer);
+                        completeTimer();
+                    }
+                }, 1000);
+                startBtn.textContent = 'Pause';
+            } else {
+                clearInterval(timer);
+                startBtn.textContent = 'Start';
+            }
+            isRunning = !isRunning;
+        }
+
+        function completeTimer() {
+            if (!isBreak) {
+                timeLeft = 5 * 60;
+                statusText.textContent = 'Break Time';
+                currentSession++;
+                sessionCount.textContent = `Session ${currentSession}`;
+            } else {
+                timeLeft = 25 * 60;
+                statusText.textContent = 'Study Time';
+            }
+            isBreak = !isBreak;
+            isRunning = false;
+            startBtn.textContent = 'Start';
+            updateDisplay();
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            timeLeft = 25 * 60;
+            isRunning = false;
+            isBreak = false;
+            currentSession = 1;
+            startBtn.textContent = 'Start';
+            statusText.textContent = 'Study Time';
+            sessionCount.textContent = 'Session 1';
+            updateDisplay();
+        }
+
+        startBtn.addEventListener('click', toggleTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        updateDisplay();
+    </script>
+</body>
+</html>

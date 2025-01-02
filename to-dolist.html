@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam To-Do List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .todo-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .todo-list {
+            list-style: none;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .todo-item:hover {
+            transform: translateX(5px);
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .todo-item.completed {
+            opacity: 0.7;
+            text-decoration: line-through;
+        }
+
+        .todo-text {
+            flex: 1;
+        }
+
+        .delete-btn {
+            background: rgba(255, 0, 0, 0.3);
+            padding: 5px 10px;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 0, 0, 0.4);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>Topics To Cover</h1>
+        
+        <div class="input-section">
+            <input type="text" id="todoInput" placeholder="Add a new task...">
+            <button onclick="addTodo()">Add</button>
+        </div>
+
+        <div class="filters">
+            <button onclick="filterTodos('all')">All</button>
+            <button onclick="filterTodos('active')">Active</button>
+            <button onclick="filterTodos('completed')">Completed</button>
+        </div>
+
+        <ul class="todo-list" id="todoList"></ul>
+    </div>
+
+    <script>
+        let todos = [];
+
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                todos.push({
+                    id: Date.now(),
+                    text: text,
+                    completed: false
+                });
+                input.value = '';
+                saveTodos();
+                renderTodos();
+            }
+        }
+
+        function toggleTodo(id) {
+            todos = todos.map(todo => 
+                todo.id === id ? {...todo, completed: !todo.completed} : todo
+            );
+            saveTodos();
+            renderTodos();
+        }
+
+        function deleteTodo(id) {
+            todos = todos.filter(todo => todo.id !== id);
+            saveTodos();
+            renderTodos();
+        }
+
+        function renderTodos(filter = 'all') {
+            const list = document.getElementById('todoList');
+            list.innerHTML = '';
+
+            let filteredTodos = todos;
+            if (filter === 'active') {
+                filteredTodos = todos.filter(todo => !todo.completed);
+            } else if (filter === 'completed') {
+                filteredTodos = todos.filter(todo => todo.completed);
+            }
+
+            filteredTodos.forEach(todo => {
+                const li = document.createElement('li');
+                li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                li.innerHTML = `
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''} 
+                           onchange="toggleTodo(${todo.id})">
+                    <span class="todo-text">${todo.text}</span>
+                    <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function filterTodos(filter) {
+            renderTodos(filter);
+        }
+
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            const saved = localStorage.getItem('todos');
+            if (saved) {
+                todos = JSON.parse(saved);
+                renderTodos();
+            }
+        }
+
+        // Initialize
+        loadTodos();
+
+        // Enter key support
+        document.getElementById('todoInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTodo();
+        });
+    </script>
+</body>
+</html>

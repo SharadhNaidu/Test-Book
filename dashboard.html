@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .news-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+            font-size:1.2em;
+        }
+
+        .news-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .exam-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .exam-card h3 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .exam-date {
+            font-size: 1.1em;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .prep-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .prep-button {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .prep-button:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .prep-button h3 {
+            font-size: 1.2em;
+            color: white;
+        }
+
+        .seniors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .senior-card {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .senior-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        #logo{
+            height:90px;
+    width:190px;
+    margin-left: -350px;
+    margin-top: -30px;
+        }
+        #welcome{
+            margin-top: -70px;
+            margin-left: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="Basic Logo Generation (Community).png" id="logo">
+            <h1 id="welcome">Welcome,RVian!</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>What's Hot?</h2>
+            <div class="news-box">
+                <p>Final semester examinations to begin from May 15th. All students are requested to complete their assignments before the deadline.</p>
+            </div>
+            <div class="news-box">
+                <p>Web Development workshop scheduled for next week. Register now to secure your spot!</p>
+            </div>
+            <div class="news-box">
+                <p>Library timing extended during examination period. Now open till 10 PM.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Exams Ahead</h2>
+            <div class="exam-grid">
+                <div class="exam-card">
+                    <h3>Exploring Science</h3>
+                    <div class="exam-date">May 15, 2024 - 10:00 AM</div>
+                </div>
+                <div class="exam-card">
+                    <h3>Web Development</h3>
+                    <div class="exam-date">May 17, 2024 - 2:00 PM</div>
+                </div>
+                <div class="exam-card">
+                    <h3>Engineering Explorations</h3>
+                    <div class="exam-date">May 19, 2024 - 10:00 AM</div>
+                </div>
+                <div class="exam-card">
+                    <h3>Programming in C</h3>
+                    <div class="exam-date">May 21, 2024 - 2:00 PM</div>
+                </div>
+                <div class="exam-card">
+                    <h3>Discrete Mathematics</h3>
+                    <div class="exam-date">May 23, 2024 - 10:00 AM</div>
+                </div>
+                <div class="exam-card">
+                    <h3>Digital Systems and Computer Architecture</h3>
+                    <div class="exam-date">May 25, 2024 - 2:00 PM</div>
+                </div>
+                <div class="exam-card">
+                    <h3>Constitution of India</h3>
+                    <div class="exam-date">May 27, 2024 - 10:00 AM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Resources</h2>
+            <div class="prep-grid">
+                <div class="prep-button" onclick="location.href='exploring-science.html'">
+                    <h3>Exploring Science</h3>
+                </div>
+                <div class="prep-button" onclick="location.href='web-development.html'">
+                    <h3>Web Fundamentals and UI Development</h3>
+                </div>
+                <div class="prep-button" onclick="location.href='engineering-explorations.html'">
+                    <h3>Engineering Explorations</h3>
+                </div>
+                <div class="prep-button" onclick="location.href='programming-in-c.html'">
+                    <h3>Programming in C</h3>
+                </div>
+                <div class="prep-button" onclick="location.href='discrete-mathematics.html'">
+                    <h3>Discrete Mathematics</h3>
+                </div>
+                <div class="prep-button" onclick="location.href='digital-systems.html'">
+                    <h3>Digital Systems and Computer Architecture</h3>
+                </div>
+                <div class="prep-button" onclick="location.href='constitution.html'">
+                    <h3>Constitution of India</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Want Help?</h2>
+            <div class="seniors-grid">
+                <div class="senior-card">
+                    <img src="/api/placeholder/100/100" alt="Senior 1">
+                    <h3>senior</h3>
+                    <p>Web Development Expert</p>
+                    <a href="https://linkedin.com/in/johndoe" target="_blank">LinkedIn Profile</a>
+                </div>
+                <div class="senior-card">
+                    <img src="/api/placeholder/100/100" alt="Senior 2">
+                    <h3>Jane Smith</h3>
+                    <p>Programming Expert</p>
+                    <a href="https://linkedin.com/in/janesmith" target="_blank">LinkedIn Profile</a>
+                </div>
+                <div class="senior-card">
+                    <img src="/api/placeholder/100/100" alt="Senior 3">
+                    <h3>Mike Johnson</h3>
+                    <p>Mathematics Tutor</p>
+                    <a href="https://linkedin.com/in/mikejohnson" target="_blank">LinkedIn Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

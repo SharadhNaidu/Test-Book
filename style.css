@@ -1,0 +1,118 @@
+body{
+    background-image: url(pexels-felixmittermeier-956999.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+#blur {
+fill: rgba(12, 2, 2, 0.03);
+backdrop-filter: blur(13.709223747253418px);
+margin: 0px 0px 0px 0px;
+display: flex;
+border-top: 0%;
+}
+#logo {
+    height:90px;
+    width:190px;
+    margin-left: 40px;
+    margin-top:25px;
+    margin-bottom: 25px;
+
+}
+#login-button{
+    border-radius: 28.336px;
+    border: 1.318px solid #000;
+    background: linear-gradient(90deg, #3018E8 0%, #E518F8 100%);
+    box-shadow: 0px 5.272px 5.272px 0px #11192C;
+color: #FFF;
+text-align: center;
+font-family: "Genos", serif;
+font-optical-sizing: auto;
+font-size: 36.657px;
+font-weight: 400;
+font-style: normal;
+line-height: normal;
+width: 193.957px;
+height: 56.786px;
+flex-shrink: 0;
+margin-left: 1400px;
+margin-top: 40px;
+}
+#test-book{
+    color: #FFF;
+text-align: center;
+font-family: 'Nico-Moji';
+font-size: 250px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-top: -40px;
+}
+@font-face {
+    font-family: 'Nico-Moji';
+    src:url('Nico-Moji.ttf.woff') format('woff'),
+        url('Nico-Moji.ttf.svg#Nico-Moji') format('svg'),
+        url('Nico-Moji.ttf.eot'),
+        url('Nico-Moji.ttf.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;}
+    #content{
+        color: #FFF;
+text-align: center;
+  font-family: "Orbitron", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+margin-top: -200px;
+font-size: 35px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+    }
+   
+    #linkedIn{
+        border-radius: 28.336px;
+border: 1.318px solid #000;
+background: #FFF;
+box-shadow: 0px 5.272px 5.272px 0px #11192C;
+flex-shrink: 0;
+width: 193.957px;
+height: 56.786px;
+flex-shrink: 0;
+margin-top: 20px;
+margin-left:20px;
+    }
+    .image{
+        margin-top: 15px;
+        margin-left: 25px;
+    }
+    nav{
+        display: flex;
+        justify-content: center;
+        
+    }
+    #youtube{
+        border-radius: 28.336px;
+        border: 1.318px solid #000;
+        background: #FFF;
+        box-shadow: 0px 5.272px 5.272px 0px #11192C;
+        flex-shrink: 0;
+        width: 193.957px;
+        height: 56.786px;
+        flex-shrink: 0;
+        margin-top: 20px;
+
+    }
+    #instagram{
+        margin-left: 0.001px;
+        margin-top: 20px;
+    }
+    #instagramlogo{
+        margin-left: 0.005;
+    }
+    #adjust{
+        margin-top: 100px;
+    }
+    
